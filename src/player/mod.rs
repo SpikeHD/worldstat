@@ -9,6 +9,7 @@ mod api;
 pub mod player_data;
 pub mod statistics;
 
+/// Struct for representing and interfacing with a player.
 pub struct Player {
   ctx: Option<Context>,
 
@@ -40,21 +41,25 @@ impl Player {
     }
   }
 
+  /// Specify the [Context] to use.
   pub fn with_ctx(mut self, ctx: Context) -> Self {
     self.ctx = Some(ctx);
     self
   }
 
+  /// Specify the player's name. It will be used to fetch the UUID.
   pub fn with_name(mut self, name: impl Into<String>) -> Self {
     self.name = name.into();
     self
   }
 
+  /// Specify the player's UUID. It will be used to fetch player name and data.
   pub fn with_uuid(mut self, uuid: impl Into<String>) -> Self {
     self.uuid = uuid.into();
     self
   }
 
+  /// Get the player's data.
   pub fn player_data(&mut self) -> Result<PlayerData, Box<dyn Error>> {
     let ctx = match self.ctx.clone() {
       Some(ctx) => ctx,
@@ -73,6 +78,7 @@ impl Player {
     Ok(self.player_data.clone().unwrap())
   }
 
+  /// Get the player's skin URLs.
   pub fn skin_urls(&mut self) -> Result<Option<SkinUrls>, Box<dyn Error>> {
     if self.skin_urls.is_none() {
       let uuid = self.uuid()?;
@@ -82,6 +88,7 @@ impl Player {
     Ok(self.skin_urls.clone())
   }
 
+  /// Get the player's UUID.
   pub fn uuid(&mut self) -> Result<String, Box<dyn Error>> {
     if self.uuid.is_empty() && !self.name.is_empty() {
       let uuid = api::get_uuid(self.name.as_str())?;
@@ -91,6 +98,7 @@ impl Player {
     Ok(self.uuid.clone())
   }
 
+  /// Get the player's name.
   pub fn name(&mut self) -> Result<String, Box<dyn Error>> {
     if self.name.is_empty() {
       let name = api::get_name(self.uuid.as_str())?;
@@ -100,6 +108,7 @@ impl Player {
     Ok(self.name.clone())
   }
 
+  /// Get the player's statistics.
   pub fn statistics(&mut self) -> Result<Statistics, Box<dyn Error>> {
     let uuid = self.uuid()?;
     let ctx = self.ctx.as_ref();
@@ -115,6 +124,7 @@ impl Player {
 }
 
 #[derive(Clone, Debug)]
+/// Struct representing URLs for a player's skin.
 pub struct SkinUrls {
   pub skin: String,
   pub cape: String,

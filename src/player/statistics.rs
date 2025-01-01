@@ -1,4 +1,4 @@
-use std::{error::Error, path::PathBuf};
+use std::error::Error;
 
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -6,6 +6,7 @@ use serde_json::Value;
 use crate::context::Context;
 
 #[derive(Serialize, Deserialize, Debug)]
+// Struct for getting player statistics, such as broken tools, jumps, crafted items, etc.
 pub struct Statistics {
   #[serde(skip)]
   pub uuid: String,

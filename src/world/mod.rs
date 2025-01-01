@@ -7,6 +7,7 @@ use crate::{
   level::{Level, WorldData},
 };
 
+/// Struct wrapping world data.
 pub struct World {
   ctx: Context,
 
@@ -25,6 +26,7 @@ impl World {
     })
   }
 
+  /// Save the world data to the `level.dat` file.
   pub fn save(&self) -> Result<(), Box<dyn Error>> {
     let path = self.ctx.path().join("level.dat");
     let level = Level {

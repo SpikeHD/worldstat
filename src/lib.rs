@@ -4,38 +4,48 @@
 //! It supports both singleplayer and multiplayer worlds, so you can view and modify data for
 //! other players.
 //! 
+//! # Usage
+//! 
+//! While some parts do not require providing a [Context](context::Context), most do, as they pertain to physical world data.
+//! [Context](context::Context) is used to tell other parts of the library where to look for data. You can also specify
+//! whether you want to read multiplayer or singleplayer data.
+//! 
+//! Many structs have `other` fields, which are just fields that are not explicitly deserialized. If you know your data
+//! should have a certain field, you can still access it by using `.other.get("your_field")`.
+//! 
 //! # Examples
 //! 
-//! Get a players UUID from their username:
+//! Get a players UUID and skin URLs from their username:
 //! 
 //! ```
 //! use worldstat::player::Player;
 //! 
 //! let player = Player::new()
-//!   .with_name("SpikeHD")
-//!   .uuid()
-//!   .unwrap();
+//!   .with_name("SpikeHD");
+//! let uuid = player.uuid()?;
+//! let skin_urls = player.skin_urls()?;
 //! 
-//! println!("Player UUID: {}", player);
+//! println!("Player UUID: {}", uuid);
+//! println!("Player skin URLs: {:?}", skin_urls);
 //! ```
 //!
 //! See how many oak planks a user has broken:
 //! 
 //! ```
-//! use worldstat::player::Player;
+//! use worldstat::{context::Context, player::Player};
 //! 
 //! let ctx = Context::new()
+//!   .with_is_singleplayer(false)
 //!   .with_path("./myworld");
-//! let player = Player::new()
+//! let stats = Player::new()
 //!   .with_name("SpikeHD")
 //!   .with_ctx(ctx)
-//!   .statistics()
-//!   .unwrap();
+//!   .statistics()?;
 //! 
-//! let broken = player.broken("minecraft:planks").unwrap();
-//! let count = broken.as_i64().unwrap();
+//! let crafted = stats.crafted("minecraft:oak_planks")?;
+//! let count = crafted.as_i64()?;
 //! 
-//! println!("SpikeHD has broken {} oak planks", count);
+//! println!("SpikeHD has crafted {} oak planks", count);
 //! ```
 pub mod context;
 pub mod level;

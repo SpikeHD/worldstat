@@ -9,6 +9,7 @@ use crate::player::player_data::PlayerData;
 #[serde_as]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
+/// Struct representing the world data.
 pub struct WorldData {
   pub data_version: i32,
   pub difficulty: i32,

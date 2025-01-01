@@ -10,6 +10,7 @@ use crate::{context::Context, world::World};
 #[serde_as]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
+// Struct representation of raw player data.
 pub struct PlayerData {
   pub data_version: i32,
 
