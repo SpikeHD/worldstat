@@ -137,7 +137,7 @@ impl Player {
       Err("Context required for getting statistics".to_string().into())
     } else {
       let ctx = ctx.unwrap();
-      let statistics = Statistics::get(ctx, uuid)?;
+      let statistics = Statistics::new(ctx, uuid)?;
       Ok(statistics)
     }
   }

@@ -6,7 +6,9 @@ use serde_json::Value;
 use crate::{context::Context, util};
 
 #[derive(Serialize, Deserialize, Debug)]
-// Struct for getting player statistics, such as broken tools, jumps, crafted items, etc.
+/// Struct for getting player statistics, such as broken tools, jumps, crafted items, etc.
+/// 
+/// Refer to the [Statistics](https://minecraft.wiki/w/Statistics) page on the Minecraft Wiki for more information and fields.
 pub struct Statistics {
   #[serde(skip)]
   pub uuid: String,
@@ -17,7 +19,7 @@ pub struct Statistics {
 }
 
 impl Statistics {
-  pub fn get(ctx: &Context, uuid: String) -> Result<Self, Box<dyn Error>> {
+  pub fn new(ctx: &Context, uuid: String) -> Result<Self, Box<dyn Error>> {
     let stats = ctx.path().join("stats");
     let path = util::player_file(&uuid, stats);
 
