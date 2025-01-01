@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{error::Error, path::PathBuf};
 
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -17,9 +17,24 @@ pub struct Statistics {
 
 impl Statistics {
   pub fn get(ctx: &Context, uuid: String) -> Result<Statistics, Box<dyn Error>> {
-    let path = ctx.path().join("stats").join(format!("{}.json", uuid));
+    let mut path = None;
+    let stats = ctx.path().join("stats");
 
-    if path.exists() {
+    for p in stats.read_dir()? {
+      let p = p?;
+      let pathname = p.path();
+      let filename = p.file_name();
+      let filename= filename.to_string_lossy();
+      // get the filename without the dashes
+      let filename = filename.replace('-', "");
+      
+      if filename == format!("{}.json", uuid) {
+        path = Some(pathname);
+        break;
+      }
+    }
+
+    if let Some(path) = path { 
       let contents = std::fs::read_to_string(path)?;
       let mut stats: Statistics = serde_json::from_str(&contents)?;
 
