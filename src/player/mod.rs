@@ -1,10 +1,12 @@
 use std::error::Error;
 
+use player_data::PlayerData;
 use statistics::Statistics;
 
 use crate::context::Context;
 
 mod api;
+pub mod player_data;
 pub mod statistics;
 
 pub struct Player {
@@ -12,6 +14,8 @@ pub struct Player {
 
   name: String,
   uuid: String,
+
+  player_data: Option<PlayerData>,
 }
 
 impl Player {
@@ -21,6 +25,8 @@ impl Player {
 
       name: String::new(),
       uuid: String::new(),
+
+      player_data: None,
     }
   }
 
@@ -37,6 +43,24 @@ impl Player {
   pub fn with_uuid(mut self, uuid: impl Into<String>) -> Self {
     self.uuid = uuid.into();
     self
+  }
+
+  pub fn player_data(&mut self) -> Result<PlayerData, Box<dyn Error>> {
+    let ctx = match self.ctx.clone() {
+      Some(ctx) => ctx,
+      None => return Err("Context required for getting player data".into()),
+    };
+
+    if self.player_data.is_none() {
+      if ctx.is_singleplayer() {
+        self.player_data = Some(PlayerData::new(ctx.clone(), None)?);
+      } else {
+        let uuid = self.uuid()?;
+        self.player_data = Some(PlayerData::new(ctx.clone(), Some(uuid))?);
+      }
+    }
+
+    Ok(self.player_data.clone().unwrap())
   }
 
   pub fn uuid(&mut self) -> Result<String, Box<dyn Error>> {

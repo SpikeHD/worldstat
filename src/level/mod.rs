@@ -4,6 +4,8 @@ use fastnbt::{IntArray, Value};
 use serde::{Deserialize, Serialize};
 use serde_with::{serde_as, BoolFromInt};
 
+use crate::player::player_data::PlayerData;
+
 #[serde_as]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
@@ -15,7 +17,7 @@ pub struct WorldData {
   pub game_type: i32,
   pub last_played: i64,
   pub level_name: String,
-  pub player: Option<Value>,
+  pub player: Option<PlayerData>,
   pub server_brands: Option<Vec<String>>,
   pub spawn_angle: f32,
   pub spawn_x: i32,
