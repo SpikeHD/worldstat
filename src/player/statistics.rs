@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{error::Error, time::Duration};
 
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -56,17 +56,20 @@ impl Statistics {
     Ok(())
   }
 
-  // pub fn playtime(&self) -> Result<Duration, Box<dyn Error>> {
-  //   let playtime = self.custom("minecraft:play_time")?;
-  //   Duration::from_secs(playtime.as_u64().unwrap() as u64)
-  // }
+  pub fn playtime(&self) -> Result<Duration, Box<dyn Error>> {
+    let playtime = self.custom("minecraft:play_time").ok_or("No playtime found")?.as_u64().ok_or("Could not convert playtime to u64")?;
+    // Default tickrate. Under most circumstances this should be accurate.
+    let playtime = playtime / 20;
+
+    Ok(Duration::from_secs(playtime))
+  }
 
   pub fn custom(&self, key: &str) -> Option<&Value> {
-    self.stats.get(key)
+    self.stats.get("minecraft:custom").and_then(|d| d.get(key))
   }
 
   pub fn custom_mut(&mut self, key: &str) -> Option<&mut Value> {
-    self.stats.get_mut(key)
+    self.stats.get_mut("minecraft:custom").and_then(|d| d.get_mut(key))
   }
 
   pub fn dropped(&self, key: &str) -> Option<&Value> {
