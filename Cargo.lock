@@ -975,6 +975,7 @@ name = "worldstat"
 version = "0.0.1"
 dependencies = [
  "fastnbt",
+ "flate2",
  "gumdrop",
  "serde",
  "serde_json",
