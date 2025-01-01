@@ -3,7 +3,7 @@ use std::{collections::HashMap, error::Error};
 use fastnbt::{IntArray, Value};
 use flate2::read::GzDecoder;
 use serde::{Deserialize, Serialize};
-use serde_with::{BoolFromInt, serde_as};
+use serde_with::{serde_as, BoolFromInt};
 
 use crate::{context::Context, world::World};
 
@@ -22,7 +22,7 @@ pub struct PlayerData {
   pub invulnerable: bool,
 
   pub last_death_location: Option<LastDeathLocation>,
-  
+
   #[serde_as(as = "BoolFromInt")]
   pub on_ground: bool,
 
@@ -31,7 +31,7 @@ pub struct PlayerData {
   pub score: i32,
   pub selected_item_slot: i32,
   pub sleep_timer: i32,
-  
+
   pub spawn_angle: f32,
   pub spawn_x: i32,
   pub spawn_y: i32,
@@ -55,7 +55,7 @@ pub struct PlayerData {
   pub seen_credits: bool,
 
   #[serde(flatten)]
-  pub other: HashMap<String, Value>
+  pub other: HashMap<String, Value>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -69,7 +69,11 @@ impl PlayerData {
     //If no UUID is provided, assume singleplayer
     if uuid.is_none() {
       let world = World::new(ctx)?;
-      world.world_data.player.clone().ok_or("No player data found in level.dat".into())
+      world
+        .world_data
+        .player
+        .clone()
+        .ok_or("No player data found in level.dat".into())
     } else {
       let uuid = uuid.unwrap();
       let path = ctx.path().join("playerdata").join(format!("{}.dat", uuid));

@@ -1,13 +1,15 @@
-use std::{
-  cell::{Cell, RefCell},
-  path::PathBuf,
-  sync::Arc,
-};
+use std::{cell::RefCell, path::PathBuf};
 
 #[derive(Clone)]
 pub struct ContextInner {
   path: PathBuf,
   is_singleplayer: bool,
+}
+
+impl Default for ContextInner {
+  fn default() -> Self {
+    Self::new()
+  }
 }
 
 impl ContextInner {
@@ -22,6 +24,12 @@ impl ContextInner {
 #[derive(Clone)]
 pub struct Context {
   inner: RefCell<ContextInner>,
+}
+
+impl Default for Context {
+  fn default() -> Self {
+    Self::new()
+  }
 }
 
 impl Context {

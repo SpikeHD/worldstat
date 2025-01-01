@@ -5,14 +5,15 @@ fn main() {
   let mut player = Player::new().with_name("spikehd4k");
 
   println!("UUID: {}", player.uuid().unwrap());
-  
+
   if !path.is_empty() {
-    let ctx = Context::new()
-      .with_path(path)
-      .with_is_singleplayer(true);
+    let ctx = Context::new().with_path(path).with_is_singleplayer(true);
     let mut player = Player::new().with_ctx(ctx);
 
-    println!("Player data: {:#?}", player.player_data().unwrap());
+    println!(
+      "Player data: {}",
+      serde_json::to_string(&player.player_data().unwrap()).unwrap()
+    );
   } else {
     println!("To read full playerdata from a world, pass the world path as an argument");
   }

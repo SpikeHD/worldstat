@@ -18,6 +18,12 @@ pub struct Player {
   player_data: Option<PlayerData>,
 }
 
+impl Default for Player {
+  fn default() -> Self {
+    Self::new()
+  }
+}
+
 impl Player {
   pub fn new() -> Self {
     Player {
@@ -86,7 +92,7 @@ impl Player {
     let ctx = self.ctx.as_ref();
 
     if ctx.is_none() {
-      Err(format!("Context required for getting statistics").into())
+      Err("Context required for getting statistics".to_string().into())
     } else {
       let ctx = ctx.unwrap();
       let statistics = Statistics::get(ctx, uuid)?;
