@@ -21,7 +21,7 @@ impl Statistics {
     let stats = ctx.path().join("stats");
     let path = util::player_file(&uuid, stats);
 
-    if let Some(path) = path { 
+    if let Some(path) = path {
       let contents = std::fs::read_to_string(path)?;
       let mut stats: Statistics = serde_json::from_str(&contents)?;
 
@@ -29,7 +29,7 @@ impl Statistics {
 
       return Ok(stats);
     }
-    
+
     Err(format!("No stats found for uuid {}", uuid).into())
   }
 
@@ -43,7 +43,11 @@ impl Statistics {
   }
 
   pub fn playtime(&self) -> Result<Duration, Box<dyn Error>> {
-    let playtime = self.custom("minecraft:play_time").ok_or("No playtime found")?.as_u64().ok_or("Could not convert playtime to u64")?;
+    let playtime = self
+      .custom("minecraft:play_time")
+      .ok_or("No playtime found")?
+      .as_u64()
+      .ok_or("Could not convert playtime to u64")?;
     // Default tickrate. Under most circumstances this should be accurate.
     let playtime = playtime / 20;
 
@@ -55,7 +59,10 @@ impl Statistics {
   }
 
   pub fn custom_mut(&mut self, key: &str) -> Option<&mut Value> {
-    self.stats.get_mut("minecraft:custom").and_then(|d| d.get_mut(key))
+    self
+      .stats
+      .get_mut("minecraft:custom")
+      .and_then(|d| d.get_mut(key))
   }
 
   pub fn dropped(&self, key: &str) -> Option<&Value> {

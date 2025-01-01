@@ -5,8 +5,7 @@ use worldstat::{context::Context, player::Player};
 fn main() {
   let path = std::env::args().nth(1).unwrap();
   let user = std::env::args().nth(2).unwrap();
-  let ctx = Context::new()
-    .with_path(path);
+  let ctx = Context::new().with_path(path);
   let player = Player::new()
     .with_name(user)
     .with_ctx(ctx)
@@ -17,7 +16,11 @@ fn main() {
   let count = crafted.as_i64().unwrap_or(0);
   let playtime = player.playtime().unwrap();
 
-  println!("SpikeHD has crafted {} oak planks, and has played for {}", count, duration_to_unit(playtime));
+  println!(
+    "SpikeHD has crafted {} oak planks, and has played for {}",
+    count,
+    duration_to_unit(playtime)
+  );
 }
 
 fn duration_to_unit(duration: Duration) -> String {

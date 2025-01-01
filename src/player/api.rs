@@ -49,11 +49,14 @@ pub fn get_name(uuid: &str) -> Result<String, Box<dyn Error>> {
 }
 
 pub fn get_skin_data(uuid: &str) -> Result<SkinUrls, Box<dyn Error>> {
-  let url = format!("https://sessionserver.mojang.com/session/minecraft/profile/{}", uuid);
+  let url = format!(
+    "https://sessionserver.mojang.com/session/minecraft/profile/{}",
+    uuid
+  );
   let response = ureq::get(&url).call()?;
   let body = response.into_string()?;
   let json: Value = serde_json::from_str(&body)?;
-  
+
   let b64 = match json.get("properties").and_then(|p| p[0].get("value")) {
     Some(value) => value.to_string().replace('"', ""),
     None => return Err(format!("No skin found for uuid {}", uuid).into()),

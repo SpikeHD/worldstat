@@ -116,7 +116,11 @@ impl Player {
     let ctx = self.ctx.as_ref();
 
     if ctx.is_none() {
-      Err("Context required for getting advancements".to_string().into())
+      Err(
+        "Context required for getting advancements"
+          .to_string()
+          .into(),
+      )
     } else {
       let ctx = ctx.unwrap();
       let advancements = Advancements::new(ctx, uuid)?;

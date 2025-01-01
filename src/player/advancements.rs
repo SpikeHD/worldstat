@@ -1,7 +1,7 @@
 use std::{collections::HashMap, error::Error};
 
-use serde_json::Value;
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 use crate::{context::Context, util};
 
@@ -27,7 +27,7 @@ impl Advancements {
     }
 
     Err("No advancements found".into())
-  } 
+  }
 
   pub fn get(&self, key: &str) -> Option<&Value> {
     self.other.get(key)

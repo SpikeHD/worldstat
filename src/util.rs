@@ -15,10 +15,10 @@ pub fn player_file(uuid: impl AsRef<str>, root: PathBuf) -> Option<PathBuf> {
 
     let pathname = p.path();
     let filename = p.file_name();
-    let filename= filename.to_string_lossy();
+    let filename = filename.to_string_lossy();
     // get the filename without the dashes
     let filename = filename.replace('-', "");
-    
+
     if filename == format!("{}.json", uuid.as_ref()) {
       path = Some(pathname);
       break;
