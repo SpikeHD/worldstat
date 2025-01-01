@@ -29,7 +29,17 @@ pub struct WorldData {
   pub world_gen_settings: WorldGenSettings,
 
   #[serde(flatten)]
-  pub other: HashMap<String, Value>,
+  other: HashMap<String, Value>,
+}
+
+impl WorldData {
+  pub fn get(&self, key: &str) -> Option<&Value> {
+    self.other.get(key)
+  }
+
+  pub fn get_mut(&mut self, key: &str) -> Option<&mut Value> {
+    self.other.get_mut(key)
+  }
 }
 
 #[serde_as]

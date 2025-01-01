@@ -10,8 +10,9 @@
 //! [Context](context::Context) is used to tell other parts of the library where to look for data. You can also specify
 //! whether you want to read multiplayer or singleplayer data.
 //! 
-//! Many structs have `other` fields, which are just fields that are not explicitly deserialized. If you know your data
-//! should have a certain field, you can still access it by using `.other.get("your_field")`.
+//! Many structs may *seem* to be missing fields, but they are actually just fields that are not explicitly deserialized. If you know your data
+//! should have a certain field, you can still access it by using `<Struct>.get("your_field")`. This is useful for accessing custom data that is not
+//! covered, or may even be custom (e.g. through mods).
 //! 
 //! # Examples
 //! 
@@ -47,6 +48,8 @@
 //! 
 //! println!("SpikeHD has crafted {} oak planks", count);
 //! ```
+mod util;
+
 pub mod context;
 pub mod level;
 pub mod player;

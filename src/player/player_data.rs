@@ -56,7 +56,7 @@ pub struct PlayerData {
   pub seen_credits: bool,
 
   #[serde(flatten)]
-  pub other: HashMap<String, Value>,
+  other: HashMap<String, Value>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -67,7 +67,7 @@ pub struct LastDeathLocation {
 
 impl PlayerData {
   pub fn new(ctx: Context, uuid: Option<String>) -> Result<Self, Box<dyn Error>> {
-    //If no UUID is provided, assume singleplayer
+    // If no UUID is provided, assume singleplayer
     if uuid.is_none() {
       let world = World::new(ctx)?;
       world
@@ -84,5 +84,13 @@ impl PlayerData {
 
       Ok(player_data)
     }
+  }
+
+  pub fn get(&self, key: &str) -> Option<&Value> {
+    self.other.get(key)
+  }
+
+  pub fn get_mut(&mut self, key: &str) -> Option<&mut Value> {
+    self.other.get_mut(key)
   }
 }

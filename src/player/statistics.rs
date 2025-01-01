@@ -3,7 +3,7 @@ use std::{error::Error, time::Duration};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::context::Context;
+use crate::{context::Context, util};
 
 #[derive(Serialize, Deserialize, Debug)]
 // Struct for getting player statistics, such as broken tools, jumps, crafted items, etc.
@@ -17,23 +17,9 @@ pub struct Statistics {
 }
 
 impl Statistics {
-  pub fn get(ctx: &Context, uuid: String) -> Result<Statistics, Box<dyn Error>> {
-    let mut path = None;
+  pub fn get(ctx: &Context, uuid: String) -> Result<Self, Box<dyn Error>> {
     let stats = ctx.path().join("stats");
-
-    for p in stats.read_dir()? {
-      let p = p?;
-      let pathname = p.path();
-      let filename = p.file_name();
-      let filename= filename.to_string_lossy();
-      // get the filename without the dashes
-      let filename = filename.replace('-', "");
-      
-      if filename == format!("{}.json", uuid) {
-        path = Some(pathname);
-        break;
-      }
-    }
+    let path = util::player_file(&uuid, stats);
 
     if let Some(path) = path { 
       let contents = std::fs::read_to_string(path)?;
@@ -41,10 +27,10 @@ impl Statistics {
 
       stats.uuid = uuid.to_string();
 
-      Ok(stats)
-    } else {
-      Err(format!("No stats found for uuid {}", uuid).into())
+      return Ok(stats);
     }
+    
+    Err(format!("No stats found for uuid {}", uuid).into())
   }
 
   pub fn save(&self, ctx: &Context, uuid: &str) -> Result<(), Box<dyn Error>> {

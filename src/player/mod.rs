@@ -1,10 +1,12 @@
 use std::error::Error;
 
+use advancements::Advancements;
 use player_data::PlayerData;
 use statistics::Statistics;
 
 use crate::context::Context;
 
+pub mod advancements;
 mod api;
 pub mod player_data;
 pub mod statistics;
@@ -106,6 +108,20 @@ impl Player {
     }
 
     Ok(self.name.clone())
+  }
+
+  /// get the player's advancements.
+  pub fn advancements(&mut self) -> Result<Advancements, Box<dyn Error>> {
+    let uuid = self.uuid()?;
+    let ctx = self.ctx.as_ref();
+
+    if ctx.is_none() {
+      Err("Context required for getting advancements".to_string().into())
+    } else {
+      let ctx = ctx.unwrap();
+      let advancements = Advancements::new(ctx, uuid)?;
+      Ok(advancements)
+    }
   }
 
   /// Get the player's statistics.
