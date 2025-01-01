@@ -8,6 +8,7 @@ lto = true
 strip = "debuginfo"
 
 [dependencies]
+base64 = "0.22.1"
 fastnbt = "2.5.0"
 flate2 = "1.0.35"
 gumdrop = "0.8.1"

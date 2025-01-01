@@ -15,6 +15,8 @@ pub struct Player {
   name: String,
   uuid: String,
 
+  skin_urls: Option<SkinUrls>,
+
   player_data: Option<PlayerData>,
 }
 
@@ -31,6 +33,8 @@ impl Player {
 
       name: String::new(),
       uuid: String::new(),
+
+      skin_urls: None,
 
       player_data: None,
     }
@@ -69,6 +73,15 @@ impl Player {
     Ok(self.player_data.clone().unwrap())
   }
 
+  pub fn skin_urls(&mut self) -> Result<Option<SkinUrls>, Box<dyn Error>> {
+    if self.skin_urls.is_none() {
+      let uuid = self.uuid()?;
+      self.skin_urls = Some(api::get_skin_data(&uuid)?);
+    }
+
+    Ok(self.skin_urls.clone())
+  }
+
   pub fn uuid(&mut self) -> Result<String, Box<dyn Error>> {
     if self.uuid.is_empty() && !self.name.is_empty() {
       let uuid = api::get_uuid(self.name.as_str())?;
@@ -99,4 +112,10 @@ impl Player {
       Ok(statistics)
     }
   }
+}
+
+#[derive(Clone, Debug)]
+pub struct SkinUrls {
+  pub skin: String,
+  pub cape: String,
 }
