@@ -17,7 +17,7 @@ fn main() {
   let playtime = player.playtime().unwrap();
 
   println!(
-    "SpikeHD has crafted {} oak planks, and has played for {}",
+    "User has crafted {} oak planks, and has played for {}",
     count,
     duration_to_unit(playtime)
   );
