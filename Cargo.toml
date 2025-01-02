@@ -2,6 +2,12 @@
 name = "worldstat"
 version = "0.0.1"
 edition = "2021"
+description = "Simple library for interfacing with Minecraft world information"
+readme = "README.md"
+homepage = "https://github.com/SpikeHD/worldstat"
+repository = "https://github.com/SpikeHD/worldstat"
+keywords = [ "minecraft", "statistics", "nbt" ]
+categories = [ "gui", "web-programming" ]
 
 [profile.release]
 lto = true
