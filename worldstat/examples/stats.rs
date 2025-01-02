@@ -5,6 +5,12 @@ use worldstat::{context::Context, player::Player};
 fn main() {
   let path = std::env::args().nth(1).unwrap();
   let user = std::env::args().nth(2).unwrap();
+
+  if !path.is_empty() && !user.is_empty() {
+    println!("Usage: stats <path> <user>");
+    return;
+  }
+
   let ctx = Context::new().with_path(path);
   let player = Player::new()
     .with_name(user)

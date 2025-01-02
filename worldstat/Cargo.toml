@@ -1,0 +1,24 @@
+[package]
+name = "worldstat"
+version = "0.0.1"
+edition = "2021"
+description = "Simple library for interfacing with Minecraft world information"
+readme = "README.md"
+homepage = "https://github.com/SpikeHD/worldstat"
+repository = "https://github.com/SpikeHD/worldstat"
+keywords = [ "minecraft", "statistics", "nbt" ]
+categories = [ "games", "game-development" ]
+license = "GPL-3.0"
+
+[dependencies]
+base64 = "0.22.1"
+fastnbt = "2.5.0"
+flate2 = "1.0.35"
+serde = "1.0.217"
+serde_json = "1.0.134"
+serde_with = "3.12.0"
+ureq = "2.12.1"
+
+[lib]
+name = "worldstat"
+path = "src/lib.rs"

@@ -3,6 +3,12 @@ use worldstat::{context::Context, player::Player};
 fn main() {
   let name = std::env::args().nth(1).unwrap_or("".to_string());
   let path = std::env::args().nth(2).unwrap_or("".to_string());
+
+  if name.is_empty() {
+    println!("Usage: player <name> [<path>]");
+    return;
+  }
+
   let mut player = Player::new().with_name(name);
 
   println!("UUID: {}", player.uuid().unwrap());

@@ -1,0 +1,12 @@
+[package]
+name = "worldstat-cli"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+lto = true
+strip = "debuginfo"
+
+[dependencies]
+worldstat = { path = "../worldstat" }
+gumdrop = "0.8.1"

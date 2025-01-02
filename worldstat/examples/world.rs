@@ -2,6 +2,12 @@ use worldstat::world::World;
 
 fn main() {
   let path = std::env::args().nth(1).unwrap();
+
+  if path.is_empty() {
+    println!("Usage: world <path>");
+    return;
+  }
+
   let ctx = worldstat::context::Context::new().with_path(path);
   let world = World::new(ctx).unwrap();
 
