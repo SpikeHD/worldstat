@@ -1,6 +1,6 @@
 //! A library for interfacing with Minecraft world information
 //!
-//! This library provides a simple interface for getting information about a Minecraft world.
+//! `worldstat` provides a simple interface for getting information about a Minecraft world.
 //! It supports both singleplayer and multiplayer worlds, so you can view and modify data for
 //! other players.
 //!
