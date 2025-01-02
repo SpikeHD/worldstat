@@ -7,7 +7,7 @@ use crate::{context::Context, util};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 /// Struct representing player advancements. This covers recipe unlocks and regular achievements.
-/// 
+///
 /// Refer to the [Advancements](https://minecraft.wiki/w/Advancements) page on the Minecraft Wiki for more information and fields.
 pub struct Advancements {
   pub data_version: i32,

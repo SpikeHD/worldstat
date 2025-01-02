@@ -7,7 +7,7 @@ use crate::{context::Context, util};
 
 #[derive(Serialize, Deserialize, Debug)]
 /// Struct for getting player statistics, such as broken tools, jumps, crafted items, etc.
-/// 
+///
 /// Refer to the [Statistics](https://minecraft.wiki/w/Statistics) page on the Minecraft Wiki for more information and fields.
 pub struct Statistics {
   #[serde(skip)]
