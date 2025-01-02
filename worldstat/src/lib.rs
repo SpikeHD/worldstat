@@ -18,7 +18,7 @@
 //!
 //! Get a players UUID and skin URLs from their username:
 //!
-//! ```
+//! ```rust
 //! use worldstat::player::Player;
 //!
 //! let player = Player::new()
@@ -32,7 +32,7 @@
 //!
 //! See how many oak planks a user has broken:
 //!
-//! ```
+//! ```rust
 //! use worldstat::{context::Context, player::Player};
 //!
 //! let ctx = Context::new()

@@ -26,7 +26,7 @@ Documentation is available at [docs.rs](https://docs.rs/worldstat).
 
 Get a players UUID and skin URLs from their username:
 
-```
+```rust
 use worldstat::player::Player;
 
 let player = Player::new()
@@ -40,7 +40,7 @@ println!("Player skin URLs: {:?}", skin_urls);
 
 See how many oak planks a user has broken:
 
-```
+```rust
 use worldstat::{context::Context, player::Player};
 
 let ctx = Context::new()
